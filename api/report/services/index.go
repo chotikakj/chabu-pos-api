@@ -3,7 +3,24 @@ package ReportService
 import (
 	ReportRepository "pos-api/api/report/repository"
 	Schema "pos-api/api/report/schema"
+	"pos-api/models"
 )
+
+func GetBillTransaction(body Schema.ReportHomeDto) ([]models.BillModel, error) {
+	bill, err := ReportRepository.GetBillReport(body.StartDate, body.EndDate)
+	if err != nil {
+		return nil, err
+	}
+	return bill, nil
+}
+
+func GetBillDetail(BillID string) ([]models.BillDetailModel, error) {
+	bill_detail, err := ReportRepository.GetBillDetailByBillID(BillID)
+	if err != nil {
+		return nil, err
+	}
+	return bill_detail, nil
+}
 
 func GetHomeReport(body Schema.ReportHomeDto) (*Schema.ReportHome, error) {
 	bill, err := ReportRepository.GetBillReport(body.StartDate, body.EndDate)
